@@ -1,0 +1,98 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+
+<meta name="keywords" content="
+{% block meta-keywords %}
+    {% for object in PROIZVODITEL %}
+        {{ object.name }}
+    {% endfor %}
+{% endblock %}
+" />
+<meta name="description" content="
+{% block meta-description %}
+    {% for object in PROIZVODITEL %}
+        {{ object.name }}
+    {% endfor %}
+{% endblock %}" />
+{% block extra-head %}{% endblock %}
+{% block google-analytics %}{% endblock %}
+
+</head>
+<body>
+    <link rel="stylesheet" href="/media/css/style.css">
+    <title>{% block title %}Заголовок{% endblock %}</title>
+    
+    <div id="headbanner">
+    </div>
+    
+    <div id="header">
+        {% block header %}
+            
+            <div id="search">
+                {% block search%}
+                    <form action="/search/" method="get">
+                        <label for="q">Найти</label>
+                        <input name="q" type="text">
+                        <input value="Поиск" type="submit">
+                    </form>
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+
+        <div id="horizont_menu">
+            <div id="horizont_menuelements">
+                <div class="start_topmenu">
+                {% block horizontmenu%}
+                    <ul>
+                        <li><a id="start_topmenu_activeloc" href="/">Главная</a></li>
+                        <li><a href="/about/">О нас</a></li>
+                        <li><a href="/contact/">Задать вопрос</a></li>
+                    </ul>
+                {%endblock %}
+                </div>
+                <div class="start_submenu">
+                {% block horizontsubmenu%}
+                        <ul>
+                        {% for object in PROIZVODITEL %}
+                            <li><a href="/catalog/proizvoditel/{{ object.slug }}/">{{ object.name }}</a></li>
+                        {% endfor %}
+                        </ul>
+                {% endblock%}
+                </div>
+                    
+            </div>
+        </div>
+
+<div id="dannie">
+    <div id="leftmenu">
+        {% block leftmenu %}
+        <div class="leftmenu_inner">
+        <h3>Каталог</h3>
+        </div>
+        {% endblock %}
+    </div>
+    <div id="caption">
+        {% block caption%}
+        {% endblock %}
+    </div>
+    <div id="main">
+        {% block content %}
+            Содержимое
+        {% endblock %}
+    </div>
+    <div id="content_wrap"></div>
+</div>
+<div id="footer">
+        {% block footer %}
+        
+ 
+        {% endblock %}<br><br>
+
+        
+</div>
+
+</body></html>

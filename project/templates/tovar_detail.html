@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}{{tovar.name}}{% endblock %}
+
+
+
+{% block leftmenu %}
+
+    <div class="leftmenu_inner">
+    <h3>Производители</h3>
+        <ul id="menu_ul">
+        {% for object in PROIZVODITEL %}
+            <li><a href="/catalog/proizvoditel/{{ object.slug }}/">{{ object.name }}</a></li>
+        {% endfor %}
+        </ul>
+    
+    <h3>Каталог</h3>
+    {% if categorylist %}
+        <ul id="menu_ul">
+        {% for object in categorylist %}
+            <li><a href="{{ object.slug }}/">{{ object.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>нет категорий в каталоге</p>
+    {% endif %}
+    </div>    
+    
+{% endblock %}
+
+{% block caption%}
+
+<a href="/catalog/proizvoditel/{{tovar.proizvoditel.slug}}">{{ tovar.proizvoditel }}</a>/<a href="/catalog/proizvoditel/{{tovar.proizvoditel.slug}}/{{ tovar.category.slug }}/">{{tovar.category}}</a>
+<h1>{{tovar}}</h1>
+{% endblock %}
+
+{% block content %}
+<fieldset>
+    {% if tovar %}
+    <br>
+            <a href="/catalog/tovar/{{ tovar.slug }}/">{{tovar.category}} {{tovar.name}}</a>
+            <p>Производитель: <a href="/catalog/proizvoditel/{{tovar.proizvoditel.slug}}">{{ tovar.proizvoditel }}</a></p>
+            {%if tovar.strana_brenda %}<p>Страна бренда: {{tovar.strana_brenda}}</p>{%endif%}
+            {% if tovar.cena %}
+                <p>Розничная цена: {{tovar.cena}} руб.</p>
+            {% else %}
+                <p>Цена не указана. Возможно цена есть в прайс-листе. Так же Вы можете уточнить цену написав нам сообщение в <a href="/contact/">ФОРМЕ</a> или по электронной почте</p>
+            {% endif %}
+
+            {% if tovar.photo %}
+                <p><a href="{{tovar.photo.url}}"><img src="{{tovar.photo.url}}" alt="{{tovar.category}}{{tovar.name}}" height="100px"></a> <br>нажмите на фото для увеличения</p>
+            {% else %}
+                <p><img src="/media/images/nofoto.png" alt="{{tovar.category}}{{tovar}}" height="100px"></p>
+            {% endif %}
+            
+            <b>Описание {{tovar}} </b>
+            <fieldset>{{tovar.about|safe}}</fieldset>
+            
+            {% if tovar.techharakteristiki %}
+            <b>Технические характеристики {{tovar}}</b>
+            <fieldset>
+            {% if tovar.techharakteristiki.get_u_display %}
+            <p>Напряжение: {{tovar.techharakteristiki.get_u_display}} В </p>
+            {% endif %}
+            {% if tovar.techharakteristiki.tok_min %}
+            <p>Ток минимальный: {{tovar.techharakteristiki.tok_min}}</p>
+            {% endif %}
+            {% if tovar.techharakteristiki.tok_max %}
+            <p>Ток максимальный: {{tovar.techharakteristiki.tok_max}}</p>
+            {% endif %}
+            {% if tovar.techharakteristiki.period_nagruzki %}
+            <p>Период нагрузки: {{tovar.techharakteristiki.period_nagruzki}}</p>
+            {% endif %}
+            {% if tovar.techharakteristiki.mind_elektroda %}
+            <p>Минимальный диаметр электрода, мм :{{tovar.techharakteristiki.mind_elektroda}} </p>
+            {% endif %}
+            {% if tovar.techharakteristiki.maxd_elektroda %}
+            <p>Максимальный диаметр электрода, мм :{{tovar.techharakteristiki.maxd_elektroda}} </p>
+            {% endif %}
+            {% if tovar.techharakteristiki.max_mochnost %}
+            <p>Максимальная мощность: {{tovar.techharakteristiki.max_mochnost}} </p>
+            {% endif %}
+            {% if tovar.techharakteristiki.u_dugi %}
+            <p>Напряжение дуги: {{tovar.techharakteristiki.u_dugi}} </p>
+            {% endif %}
+            {% if tovar.techharakteristiki.delta_u %}
+            <p>Допустимое отклонение напряжения: {{tovar.techharakteristiki.delta_u}}</p>
+            {% endif %}
+            {% if tovar.techharakteristiki.chastota_seti %}
+            <p>Частота сети: {{tovar.techharakteristiki.chastota_seti}}</p>
+            {% endif %}
+            {% if tovar.techharakteristiki.kpd %}
+            <p>КПД: {{tovar.techharakteristiki.kpd}}</p>
+            {% endif %}
+            {% if tovar.techharakteristiki.kolichestvo_postov %}
+            <p>Количество постов: {{tovar.techharakteristiki.kolichestvo_postov}}</p>
+            {% endif %}
+            {% if tovar.techharakteristiki.gabarity %}
+            <p>Габариты: {{tovar.techharakteristiki.gabarity}}</p>
+            {% endif %}
+            {% if tovar.techharakteristiki.ves %}
+            <p>Вес: {{tovar.techharakteristiki.ves}}</p>
+            {% endif %}
+            {% if tovar.techharakteristiki.ves_brutto %}
+            <p>Вес брутто: {{tovar.techharakteristiki.ves_brutto}}</p>
+            {% endif %}
+            {% if tovar.techharakteristiki.trehfaznoe_u %}
+            <p>Трехфазное питание: {{tovar.techharakteristiki.get_trehfaznoe_u_display}} </p>
+            {% endif %}
+            {% if tovar.techharakteristiki.anti_stick %}
+            <p>Антиприлипание: {{tovar.techharakteristiki.get_anti_stick_display}} </p>
+            {% endif %}
+            {% if tovar.techharakteristiki.hot_start %}
+            <p>Поджиг дуги: {{tovar.techharakteristiki.get_hot_start_display}}</p>
+            {% endif %}
+            {% if tovar.techharakteristiki.arc_force %}
+            <p>Регулировка силы дуги: {{tovar.techharakteristiki.get_arc_force_display}}</p>
+            {% endif %}
+            {% if tovar.techharakteristiki.zachita_napryajeniya %}
+            <p>Защита от перепадов напряжения: {{tovar.techharakteristiki.get_zachita_napryajeniya_display}}</p>
+            {% endif %}
+            {% if tovar.techharakteristiki.zachita_razbyzgiv %}
+            <p>Защита от разбрызгивания: {{tovar.techharakteristiki.get_zachita_razbyzgiv_display}}</p>
+            {% endif %}
+            {% if tovar.techharakteristiki.vozdushnoe_ohlagdenie %}
+            <p>Воздушное охлаждение: {{tovar.techharakteristiki.get_vozdushnoe_ohlagdenie_display}} </p>
+            {% endif %}
+            {% if tovar.techharakteristiki.klas_zaschity %}
+            <p>Класс защиты: {{tovar.techharakteristiki.klas_zaschity }}</p>
+            {% endif %}
+            </fieldset>
+            {% endif %}
+            
+    {% else %}
+        <p>Товар на оформлении</p>
+    {% endif %}
+        
+</fieldset>
+
+{% endblock %}
+
+

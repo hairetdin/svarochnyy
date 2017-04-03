@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Сварочный инвертор, полуавтомат, генератор{% endblock %}
+
+
+
+{% block leftmenu %}
+
+<h3>Каталог</h3>
+    <div class="leftmenu_inner">
+    {{category}}
+    
+    {% if proizvoditel_list %}
+        <ul id="menu_ul">
+        {% for object in proizvoditel_list %}
+            <li><a href="{{ object.slug }}/">{{ object.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Нет производителей для данной категории</p>
+    {% endif %}
+    </div>    
+    
+{% endblock %}
+
+{% block caption%}
+<h1>{{category}}</h1>
+{% endblock %}
+
+{% block content %}
+Для {{category.name}} есть производители:
+{% for object in proizvoditel_list %}
+    <li><a href="{{ object.slug }}/">{{ object.name }}</a></li>
+{% endfor %}
+
+В категории {{category.name}} есть товары:
+{% for object in tovar_list %}
+    <li><a href="/catalog/tovar/{{ object.slug }}/">{{ object.name }}</a></li>
+{% endfor %}
+
+{% endblock %}
+
+

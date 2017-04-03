@@ -1,0 +1,45 @@
+﻿{% extends "base.html" %}
+
+{% block title %}Результаты поиска{% endblock %}
+
+{% block content %}
+    <h1>
+        Результаты по поиску: {{query}}
+    </h1>
+
+{% if error%}
+    Ошибка: {{ error }}
+{% endif %}
+    
+{% if search_list %}
+    <ol>
+    {% for tovar in search_list.object_list %}
+        <li><a href="/catalog/tovar/{{ tovar.slug }}/">{{ tovar }}</a> </li>
+    {% endfor %}
+    </ol>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if search_list.has_previous %}
+                <a href="?page={{ search_list.previous_page_number }}">Предыдущая</a>
+            {% endif %}
+
+            <span class="current">
+                Страница {{ search_list.number }} из {{ search_list.paginator.num_pages }}.
+            </span>
+
+            {% if search_list.has_next %}
+                <a href="?page={{ search_list.next_page_number }}">Следующая</a>
+            {% endif %}
+        </span>
+    </div>
+
+{% else %}
+    <p>По вашему запросу ничего не найдено</p>
+{% endif %}
+
+
+
+{% endblock %}
+
+

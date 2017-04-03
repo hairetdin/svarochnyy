@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block google-analytics %}
+{% endblock %}
+
+{% block title %}Контакты. Сварочный{% endblock %}
+
+
+{% block leftmenu %}
+{% endblock %}
+
+{% block content %}
+
+<h1>
+    Напишите нам сообщение
+</h1>
+
+<form action="/contact/" method="post">
+    <fieldset>
+  {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="fieldWrapper">
+        {{ form.subject.errors }}
+        <label for="id_subject">Тема:</label>
+        {{ form.subject }}
+
+        {{ form.message.errors }}
+        <label for="id_message">Ваше сообщение:</label>
+        
+        {{ form.message }}
+        
+        {{ form.sender.errors }}
+        <label for="id_sender">Ваш e-mail адрес:</label>
+        {{ form.sender }}
+
+    </div>
+    </fieldset>
+    <p><input type="submit" value="Отправить сообщение" /></p>
+</form>
+
+{% endblock %}
+{% block footer %}
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}{{proizvoditel}}/{{category}}{% endblock %}
+
+
+
+{% block leftmenu %}
+
+    <div class="leftmenu_inner">
+    <h3>Производители</h3>
+        <ul id="menu_ul">
+        {% for object in PROIZVODITEL %}
+            <li><a href="/catalog/proizvoditel/{{ object.slug }}/">{{ object.name }}</a></li>
+        {% endfor %}
+        </ul>
+    
+    <h3>Каталог</h3>
+    {% if categorylist %}
+        <ul id="menu_ul">
+        {% for object in categorylist %}
+            <li><a href="{{ object.slug }}/">{{ object.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>нет категорий в каталоге</p>
+    {% endif %}
+    </div>    
+    
+{% endblock %}
+
+{% block caption%}
+<h1><a href="/catalog/proizvoditel/{{proizvoditel.slug}}">{{ proizvoditel }}</a>/<a href="/catalog/proizvoditel/{{proizvoditel.slug}}/{{ category.slug }}/">{{category}}</a></h1>
+{% endblock %}
+
+{% block content %}
+Для <a href="/catalog/proizvoditel/{{proizvoditel.slug}}">{{ proizvoditel.name }}</a> доступны следующие категории: 
+    {% for object in category_list %}
+        <li><a href="/catalog/proizvoditel/{{proizvoditel.slug}}/{{ object.slug }}/">{{ object.name }}</a></li>
+    {% endfor %}
+У производителя {{proizvoditel.name}} в категории {{category}} есть товары:
+{% for object in tovar_list %}
+    <li><a href="/catalog/tovar/{{ object.slug }}/">{{ object.name }}</a></li>
+{% endfor %}
+{% endblock %}
+
+

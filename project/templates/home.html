@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Сварочный инвертор, полуавтомат, генератор{% endblock %}
+
+
+{% block leftmenu %}
+
+    <div class="leftmenu_inner">
+    <h3>Каталог</h3>
+    <fieldset>
+    <h4>Производители</h4>
+        <ul id="menu_ul">
+        {% for object in PROIZVODITEL %}
+            <li><a href="/catalog/proizvoditel/{{ object.slug }}/">{{ object.name }}</a></li>
+        {% endfor %}
+        </ul>
+    </fieldset>
+    
+    {% if category_list %}
+    <fieldset>
+    <h4>Категории</h4>
+        <ul id="menu_ul">
+        {% for object in category_list %}
+            <li><a href="/catalog/category/{{ object.slug }}/">{{ object.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>нет категорий в каталоге</p>
+    {% endif %}
+    </fieldset>
+    </div>    
+    
+{% endblock %}
+
+{% block caption%}
+<h1>Сварочное оборудование</h1>
+{% endblock %}
+
+{% block content %}
+
+    {% if tovar %}
+
+    <h3>Новые товары</h3>
+    <fieldset>
+        {% for item in tovar %}
+            <div id="catalog_item">                
+                <a href="/catalog/tovar/{{ item.slug }}/">
+                    {% if item.photo %}
+                        <img src="{{item.photo.url}}" alt="{{item.category}} {{item.name}}"></br>
+                    {% else %}
+                        <img src="/media/images/nofoto.png" alt="{{item.category}} {{item.name}}"></br>
+                    {% endif %}
+                <span>{{item}}</span><br>
+                {% if item.cena %}
+                    Цена: {{item.cena}} руб.
+                {% else %}
+                    Цена не указана
+                {% endif %}
+                </a>
+            </div>
+        {% endfor %}
+    </fieldset>
+    {% endif %}
+<br>
+    <fieldset>
+    <b>Производители</b><br>
+    {% for object in PROIZVODITEL %}
+        <a href="/catalog/proizvoditel/{{ object.slug }}/">{{ object.name }}   </a>  
+    {% endfor %}
+    </fieldset>
+    
+    <fieldset>
+    <b>Категории</b><br>
+    {% if category_list %}
+        {% for object in category_list %}
+            <a href="/catalog/category/{{ object.slug }}/">{{ object.name }}   </a>
+        {% endfor %}
+    {% else %}
+        <p>нет категорий в каталоге</p>
+    {% endif %}
+    </fieldset>
+
+{% endblock %}
+
+

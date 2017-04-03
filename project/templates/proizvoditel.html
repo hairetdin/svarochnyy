@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Сварочный инвертор, полуавтомат, генератор{% endblock %}
+
+
+
+{% block leftmenu %}
+<h3>Каталог</h3>
+
+    <div class="leftmenu_inner">
+    <h3><a href="/catalog/proizvoditel/{{proizvoditel.slug}}">{{ proizvoditel }}</a></h3>
+        {%if category_list %}
+        <ul id="menu_ul">
+            {% for object in category_list %}
+                <li><a href="/catalog/proizvoditel/{{proizvoditel}}/{{ object.slug }}/">{{ object.name }}</a></li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <p>Нет доступных категорий</p>
+        {% endif %}
+    <h5>Другие производители</h5>
+    <fieldset>
+        <ul id="menu_ul">
+        {% for object in PROIZVODITEL %}
+            <li><a href="/catalog/proizvoditel/{{ object.slug }}/">{{ object.name }}</a></li>
+        {% endfor %}
+        </ul>
+    </fieldset>
+    </div>    
+    
+{% endblock %}
+
+{% block caption%}
+<h1>{{proizvoditel}}</h1>
+{% endblock %}
+
+{% block content %}
+
+Для <a href="/catalog/proizvoditel/{{proizvoditel.slug}}">{{ proizvoditel }}</a> доступны следующие категории: 
+    {% for object in category_list %}
+        <li><a href="/catalog/proizvoditel/{{proizvoditel}}/{{ object.slug }}/">{{ object.name }}</a></li>
+    {% endfor %}
+У производителя {{proizvoditel.name}} есть товары:
+{% for object in tovar_list %}
+    <li><a href="/catalog/tovar/{{ object.slug }}/">{{ object.name }}</a></li>
+{% endfor %}
+
+{% endblock %}
+
+
