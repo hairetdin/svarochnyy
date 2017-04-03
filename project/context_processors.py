@@ -1,4 +1,4 @@
-﻿from spravochnik.models import Contragent
+from spravochnik.models import Contragent
 
 def contragent(request):
 
